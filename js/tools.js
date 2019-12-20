@@ -5,9 +5,10 @@
 let questions = [
     'Hola, ¿cómo te llamas?',
     '¿Cúal es tu dulce favorito?',
-    'Ha sido un placer ayudarte, Sirimiri te desea feliz día :)'
 ];
 
+var specialProductsJSON = '[{"name":"sugar donut","name_es":"Donut de azúcar","img":"sugar_donut.png"},{"name":"cheese cake","name_es":"Tarta de queso","img":"cheese_cake.png"},{"name":"carrot cake","name_es":"Tarta de zanahoria","img":"carrot_cake.png"},{"name":"ice coffee","name_es":"Café helado","img":"ice_coffee.png"},{"name":"banana toffee","name_es":"Banana toffee","img":"banana_toffee.png"},{"name":"chocolate muffin","name_es":"Muffin de chocolate","img":"chocolate_muffin.png"},{"name":"strawberry cookie","name_es":"Galleta de fresa","img":"strawberry_cookie.png"},{"name":"latte coffee","name_es":"Café latte","img":"latte_coffee.png"}]';
+var specialProducts = JSON.parse(specialProductsJSON);
 
 var num = 0;// posicion del array de preguntas
 var output = document.querySelector("#result"); //contenedor para mostrar preguntas
@@ -41,12 +42,29 @@ function askName() {
     }, 2000);
 }
 
+function showSpecialProductInfo(customerProduct, specialProductName) {
+    let productName = specialProductName;
+    let productImg = '';
+    for (let i = 0; i < specialProducts.length; i++) {
+        let specialProduct = specialProducts[i];
+        if (specialProduct.name == specialProductName.split('"').join('')) {
+            productName = specialProduct.name_es;
+            productImg = specialProduct.img;
+        }
+    }
 
-
+    output.innerHTML = `${customerProduct} ... suena delicioso!<br> Entonces te va a encantar lo que te voy a mostrar!<br><h4> Nuestro especial de hoy es  <span id="showSpecial">${productName}</span></h4>`;
+    if (productImg.length > 0) {
+        imgContainer.innerHTML = `
+            <img src="img/products/${productImg}" style="max-width:50%;width:auto;height:auto;">
+            <div>Ha sido un placer ayudarte, Sirimiri te desea feliz día :)</div>
+        `;
+    }
+}
 
 function showSpecialProduct() {
     var product = inputBox.value; //recogemos la respuesta del usuario [0]
-    var contenedor = document.querySelector("#showSpecial");
+
     inputBox.style.display = 'none';
     /* traemos el dato de la api  para mostrarla en la respuesta a la pregunta [1] */
     fetch('https://cors-anywhere.herokuapp.com/https://xz94zfs6u8.execute-api.eu-west-1.amazonaws.com/default/myBakery')
@@ -55,12 +73,9 @@ function showSpecialProduct() {
         })
         .then(function (myData) {
             var pastel = `${myData}`;//Guardamos en una variable el dato que traemos tras la llamada
+            showSpecialProductInfo(product, pastel);
 
-            // showSpecial.innerHTML = ` ${pastel}`;
-
-            output.innerHTML = `${product} ... suena delicioso!<br> Entonces te va a encantar lo que te voy a mostrar!<br><h4> Nuestro especial de hoy es  <span id="showSpecial">${pastel}</span></h4>`;
-            imgContainer.innerHTML = `<img src="img/confeti.jpg" style="max-width:50%;width:auto;height:auto;">`;
-            inputBox.value == "";
+            inputBox.value = "";
             ++num;
             button.setAttribute("style", "display: none");
 
@@ -74,8 +89,6 @@ function showResponse() {
             askName();
         } else if (num == 1) {
             showSpecialProduct();
-        } else if (num == 2) {
-            sayBye();
         }
     }
     inputBox.value = '';

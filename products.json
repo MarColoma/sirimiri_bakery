@@ -1,0 +1,42 @@
+[
+    {
+        "name": "sugar donut",
+        "name_es": "Donut de azúcar",
+        "img": "sugar_donut.png"
+    },
+    {
+        "name": "cheese cake",
+        "name_es": "Tarta de queso",
+        "img": "cheese_cake.png"
+    },
+    {
+        "name": "carrot cake",
+        "name_es": "Tarta de zanahoria",
+        "img": "carrot_cake.png"
+    },
+    {
+        "name": "ice coffee",
+        "name_es": "Café helado",
+        "img": "ice_coffee.png"
+    },
+    {
+        "name": "banana toffee",
+        "name_es": "Banana toffee",
+        "img": "banana_toffee.png"
+    },
+    {
+        "name": "chocolate muffin",
+        "name_es": "Muffin de chocolate",
+        "img": "chocolate_muffin.png"
+    },
+    {
+        "name": "strawberry cookie",
+        "name_es": "Galleta de fresa",
+        "img": "strawberry_cookie.png"
+    },
+    {
+        "name": "latte coffee",
+        "name_es": "Café latte",
+        "img": "latte_coffee.png"
+    }
+]
